@@ -1,17 +1,15 @@
 package main
 // https://freshman.tech/web-development-with-go/
-
+// https://www.digitalocean.com/community/tutorials/how-to-make-an-http-server-in-go
 import (
 	"net/http"
 	"os"
-	"log"
 	"html/template"
 
 	
-	"github.com/joho/godotenv"
 )
 
-var tpl = template.Must(template.ParseFiles("web/index.html"))
+var tpl = template.Must(template.ParseFiles("tmpl/index.html"))
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	// w.Write([]byte("<h1>Hello World!</h1>"))
@@ -19,22 +17,18 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Error loading .env file")
-	}
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
 	}
-
-	fs := http.FileServer(http.Dir("assets"))
+	// fs := http.FileServer(http.Dir("ui/static/css"))
+	// mux.Handle("/ui/css", http.StripPrefix("/ui/static/css", fs))
 
 	mux := http.NewServeMux()
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-
 	mux.HandleFunc("/", indexHandler)
+
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
+
 	http.ListenAndServe(":"+port, mux)
 }
