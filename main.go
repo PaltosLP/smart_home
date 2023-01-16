@@ -31,6 +31,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 
 func main() {
+
 	//Load config----------------------
 	f, err := os.Open("config.yml")
 	if err != nil {
