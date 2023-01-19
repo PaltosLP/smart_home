@@ -50,9 +50,8 @@ func main() {
 
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", indexHandler)
-
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.HandleFunc("/", indexHandler)
 
 
 	http.ListenAndServe(":"+cfg.Server.Port, mux)
