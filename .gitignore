@@ -4,3 +4,4 @@ __pycache__/
 go.mod
 tmp/
 config.yml
+notes.txt
