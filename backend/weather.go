@@ -10,8 +10,6 @@ import (
 
 func weather_resp(url string, auth string)(string){
 
-
-
 	client := http.Client{}
 	req , err := http.NewRequest("GET", url, nil)
 	if err != nil {
